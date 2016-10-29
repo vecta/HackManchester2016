@@ -21,16 +21,25 @@ namespace MugMatcher
 	    {
 		    NLicense.ObtainComponents("/local", 5000, BiometricsComponents);
 
-			var biometricClient = new NBiometricClient();
-			biometricClient.MatchingThreshold = 48;
-			biometricClient.FacesMatchingSpeed = NMatchingSpeed.Low;
+		    var biometricClient = new NBiometricClient
+		    {
+			    MatchingThreshold = 48,
+			    FacesMatchingSpeed = NMatchingSpeed.Low
+		    };
 
-			var reference = CreateSubject(referencePath, false);
+		    var reference = CreateSubject(referencePath, false);
 		    var candidate = CreateSubject(candidatePath, true);
 		    var result=new ScanResult();
 
+		    biometricClient.CreateTemplate(reference);
+		    biometricClient.CreateTemplate(candidate);
+
 		    var enrollTask = biometricClient.CreateTask(NBiometricOperations.Enroll, null);
 		    enrollTask.Subjects.Add(candidate);
+			foreach (var subject in candidate.RelatedSubjects)
+			{
+				enrollTask.Subjects.Add(subject);
+			}
 			biometricClient.PerformTask(enrollTask);
 
 		    result.Status = biometricClient.Identify(reference);

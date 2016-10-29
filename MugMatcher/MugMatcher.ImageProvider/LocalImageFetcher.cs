@@ -12,7 +12,7 @@ namespace MugMatcher.ImageProvider
         public IEnumerable<ImageFetchResult> Fetch(ImageFetchRequest request)
         {
             var directoryInfo = new DirectoryInfo(ConfigurationManager.AppSettings["LocalImageSearchPath"]);
-            return directoryInfo.GetFiles(ImageFileExtentions).Select(info => new LocalImageFetchResult(info.FullName));
+            return directoryInfo.GetFiles(ImageFileExtentions).Select(info => new LocalImageFetchResult(info.FullName, "Local Image"));
         }
     }
 }

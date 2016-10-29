@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MugMatcher.ImageProvider", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MugMatcher.Web", "MugMatcher.Web\MugMatcher.Web.csproj", "{C2FA4F5C-C3E0-4C4B-9AA4-7B3052927B74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MugMatcher.ImageProvider.Tests", "MugMatcher.ImageProvider.Tests\MugMatcher.ImageProvider.Tests.csproj", "{62A79D09-25A2-4E5D-B1AE-23BFC3D1C91C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C2FA4F5C-C3E0-4C4B-9AA4-7B3052927B74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2FA4F5C-C3E0-4C4B-9AA4-7B3052927B74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2FA4F5C-C3E0-4C4B-9AA4-7B3052927B74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62A79D09-25A2-4E5D-B1AE-23BFC3D1C91C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62A79D09-25A2-4E5D-B1AE-23BFC3D1C91C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62A79D09-25A2-4E5D-B1AE-23BFC3D1C91C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62A79D09-25A2-4E5D-B1AE-23BFC3D1C91C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

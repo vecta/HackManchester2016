@@ -11,11 +11,9 @@ namespace MugMatcher.ImageProvider
 {
     public class TwitterImageFetcher : IImageFetcher
     {
-        private TwitterCredentials Credentials { get; set; }
-
         public TwitterImageFetcher()
         {
-            Credentials = new TwitterCredentials(ConfigurationManager.AppSettings["TwitterAccessKey"], ConfigurationManager.AppSettings["TwitterSecretKey"]);
+            Auth.SetApplicationOnlyCredentials(ConfigurationManager.AppSettings["TwitterAccessKey"], ConfigurationManager.AppSettings["TwitterSecretKey"], true);
         }
 
         public IEnumerable<ImageFetchResult> Fetch(ImageFetchRequest request)
@@ -23,15 +21,25 @@ namespace MugMatcher.ImageProvider
             var results = new List<ImageFetchResult>();
             var searchTweetParameters = new SearchTweetsParameters(request.Location.Latitude, request.Location.Longtitude, request.SearchRadiusMiles, DistanceMeasure.Miles)
             {
-                SearchType = SearchResultType.Recent,
-                MaximumNumberOfResults = 100,
-                Filters = TweetSearchFilters.Images
+                MaximumNumberOfResults = 300,
+                Filters = TweetSearchFilters.Images,
+//                Since = request.StartDate,
+//                Until = request.EndDate,
+//                TweetSearchType = TweetSearchType.OriginalTweetsOnly,
+                
+                
             };
 
-            var tweets = Search.SearchTweets(searchTweetParameters).Where(tweet => tweet.Media != null);
-            results.AddRange(tweets.Select(tweet => new ImageFetchResult(tweet.Url)));
+            var resultSet = Search.SearchTweets(searchTweetParameters);
+            var tweets = resultSet.Where(tweet => tweet.Media.Any());
+            results.AddRange(tweets.Select(GetImageUrl));
 
             return results;
+        }
+
+        private ImageFetchResult GetImageUrl(ITweet tweet)
+        {
+            return new ImageFetchResult(tweet.Media.First().MediaURL, tweet.Url);
         }
     }
 }

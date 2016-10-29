@@ -35,6 +35,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MugMatcherTests.cs" />
     <Compile Include="ScannerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -54,6 +56,10 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MugMatcher.ImageProvider\MugMatcher.ImageProvider.csproj">
+      <Project>{9D4ABFED-30B9-470D-B63E-AF8B5FEC2FC6}</Project>
+      <Name>MugMatcher.ImageProvider</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MugMatcher\MugMatcher.csproj">
       <Project>{0D2135A4-30BC-490F-BB2B-E17CD461D185}</Project>
       <Name>MugMatcher</Name>

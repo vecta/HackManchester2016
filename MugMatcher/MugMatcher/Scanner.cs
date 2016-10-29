@@ -32,15 +32,19 @@ namespace MugMatcher
 
 		    var reference = CreateSubject(referencePath, false);
 		    var candidate = CreateSubject(candidatePath, true);
-		    var result=new ScanResult();
+		    var result = new ScanResult();
 
 		    biometricClient.CreateTemplate(reference);
 		    biometricClient.CreateTemplate(candidate);
 
 		    var enrollTask = biometricClient.CreateTask(NBiometricOperations.Enroll, null);
+		    candidate.Id = "Candidate_0";
 		    enrollTask.Subjects.Add(candidate);
+		    var subjectIndex = 0;
 			foreach (var subject in candidate.RelatedSubjects)
 			{
+				subjectIndex++;
+				subject.Id = $"Candidate_{subjectIndex}";
 				enrollTask.Subjects.Add(subject);
 			}
 			biometricClient.PerformTask(enrollTask);

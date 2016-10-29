@@ -7,7 +7,7 @@ namespace MugMatcher.ImageProvider
 {
     public class LocalImageFetcher : IImageFetcher
     {
-        private const string ImageFileExtentions = "*.jpg;*.png;*.gif;*.tiff;*.jpeg";
+        private const string ImageFileExtentions = "*.jpg;*.png;*.gif;*.tif;*.tiff;*.jpeg";
 
         public IEnumerable<ImageFetchResult> Fetch(ImageFetchRequest request)
         {

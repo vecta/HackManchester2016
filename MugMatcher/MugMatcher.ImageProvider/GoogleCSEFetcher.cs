@@ -5,9 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Tweetinvi.Logic.JsonConverters;
 
 namespace MugMatcher.ImageProvider
 {
@@ -29,14 +27,15 @@ namespace MugMatcher.ImageProvider
 
         private string BuildQueryString(ImageFetchRequest request)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append(CseUrl);
             sb.Append($"key={APIKey}");
             sb.Append($"&cx={CustomSearchEngineId}");
-            sb.Append($"q=crowd%20of%20people");
+            sb.Append($"q=crowd%20of%20people%20manchester");
             sb.Append($"&searchType=image");
             sb.Append($"&imgType=face");
             sb.Append($"&daterestrict={request.StartDate:ddmmyyyy}:{request.EndDate:ddmmyyyy}");
+            sb.Append($"&country=uk");
 
             return sb.ToString();
         }

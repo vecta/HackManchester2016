@@ -43,8 +43,10 @@
   <ItemGroup>
     <Compile Include="Aquisition.cs" />
     <Compile Include="IImageFetcher.cs" />
+    <Compile Include="ImageStore\IImageStore.cs" />
     <Compile Include="ImageFetchRequest.cs" />
     <Compile Include="ImageFetchResult.cs" />
+    <Compile Include="ImageStore\ImageStore.cs" />
     <Compile Include="LocalImageFetcher.cs" />
     <Compile Include="LocalImageFetchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

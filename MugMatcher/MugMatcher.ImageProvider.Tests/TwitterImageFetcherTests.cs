@@ -21,6 +21,7 @@ namespace MugMatcher.ImageProvider.Tests
                     StartDate = DateTime.Today.AddDays(-30),
                     EndDate = DateTime.Today
                 });
+            var n = images.Where(result => result.Reference.Contains("imorpher")).ToList();
             Assert.That(images.Count(), Is.GreaterThan(0));
         }
     }

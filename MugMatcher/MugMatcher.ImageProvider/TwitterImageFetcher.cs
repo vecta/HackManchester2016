@@ -23,9 +23,9 @@ namespace MugMatcher.ImageProvider
             {
                 MaximumNumberOfResults = 300,
                 Filters = TweetSearchFilters.Images,
-//                Since = request.StartDate,
+                Since = DateTime.Today,
 //                Until = request.EndDate,
-//                TweetSearchType = TweetSearchType.OriginalTweetsOnly,
+                TweetSearchType = TweetSearchType.OriginalTweetsOnly,
                 
                 
             };

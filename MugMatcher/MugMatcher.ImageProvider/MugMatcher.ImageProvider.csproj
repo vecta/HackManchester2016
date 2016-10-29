@@ -82,6 +82,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aquisition.cs" />
+    <Compile Include="GoogleCSEFetcher.cs" />
+    <Compile Include="GoogleCSESearchResult.cs" />
     <Compile Include="IImageFetcher.cs" />
     <Compile Include="ImageStore\IImageStore.cs" />
     <Compile Include="ImageFetchRequest.cs" />

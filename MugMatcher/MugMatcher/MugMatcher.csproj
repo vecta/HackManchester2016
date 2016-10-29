@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MugMatcher.cs" />
     <Compile Include="SqlLite.cs" />
     <Compile Include="Scanner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -144,6 +145,12 @@
     <None Include="libopenblas.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MugMatcher.ImageProvider\MugMatcher.ImageProvider.csproj">
+      <Project>{9d4abfed-30b9-470d-b63e-af8b5fec2fc6}</Project>
+      <Name>MugMatcher.ImageProvider</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

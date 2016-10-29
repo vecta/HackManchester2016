@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="ImageStoreTests.cs" />
     <Compile Include="AquisitionTests.cs" />
+    <Compile Include="InstagramImageFetcherTests.cs" />
+    <Compile Include="GoogleCSEImageFetcherTests.cs" />
     <Compile Include="TwitterImageFetcherTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -58,6 +60,9 @@
       <Project>{9d4abfed-30b9-470d-b63e-af8b5fec2fc6}</Project>
       <Name>MugMatcher.ImageProvider</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -22,7 +22,10 @@ namespace MugMatcher
 		    NLicense.ObtainComponents("/local", 5000, BiometricsComponents);
 
 			var biometricClient = new NBiometricClient();
-		    var reference = CreateSubject(referencePath, false);
+			biometricClient.MatchingThreshold = 48;
+			biometricClient.FacesMatchingSpeed = NMatchingSpeed.Low;
+
+			var reference = CreateSubject(referencePath, false);
 		    var candidate = CreateSubject(candidatePath, true);
 		    var result=new ScanResult();
 
@@ -31,7 +34,8 @@ namespace MugMatcher
 			biometricClient.PerformTask(enrollTask);
 
 		    result.Status = biometricClient.Identify(reference);
-		    result.Score = reference.MatchingResults[0].Score;
+			if (reference.MatchingResults.Count>0)
+				result.Score = reference.MatchingResults[0].Score;
 
 		    return result;
 	    }

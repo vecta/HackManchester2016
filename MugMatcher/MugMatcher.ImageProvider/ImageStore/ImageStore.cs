@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Net;
 using System.Windows.Media.Imaging;
@@ -9,6 +10,12 @@ namespace MugMatcher.ImageProvider.ImageStore
     public class ImageStore : IImageStore
     {
         private List<string> Images = new List<string>();
+        private string imageStorePath;
+
+        public ImageStore()
+        {
+            imageStorePath = ConfigurationManager.AppSettings["TemporaryImageStorePath"];
+        }
 
         public void Add(ImageFetchResult fetchResult)
         {
@@ -43,7 +50,7 @@ namespace MugMatcher.ImageProvider.ImageStore
 
         private string GetNewFileName(string file)
         {
-            return $"{Guid.NewGuid()}.{file.Split('.')[1]}";
+            return Path.Combine(imageStorePath ,$"{Guid.NewGuid()}.{file.Split('.')[1]}");
         }
 
         private void SaveImage(string uri, byte[] data)

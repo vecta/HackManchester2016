@@ -23,6 +23,7 @@ namespace MugMatcher.ImageProvider
             var results = new List<ImageFetchResult>();
             var searchTweetParameters = new SearchTweetsParameters(request.Location.Latitude, request.Location.Longtitude, request.SearchRadiusMiles, DistanceMeasure.Miles)
             {
+                SearchType = SearchResultType.Recent,
                 MaximumNumberOfResults = 100,
                 Filters = TweetSearchFilters.Images
             };

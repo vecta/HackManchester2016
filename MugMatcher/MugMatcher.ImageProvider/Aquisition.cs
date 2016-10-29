@@ -5,8 +5,13 @@ namespace MugMatcher.ImageProvider
     public class Acquisition
     {
         private readonly IEnumerable<IImageFetcher> _imageFetchers;
+        private readonly IImageStore _imageStore;
 
-        public Acquisition() { _imageFetchers = new List<IImageFetcher> {new LocalImageFetcher()}; }
+        public Acquisition(IImageStore imageStore)
+        {
+            _imageFetchers = new List<IImageFetcher> {new LocalImageFetcher()};
+            _imageStore = imageStore;
+        }
 
         public IEnumerable<ImageFetchResult> FetchAll(ImageFetchRequest request)
         {

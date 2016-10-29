@@ -7,9 +7,11 @@ namespace MugMatcher.ImageProvider
     {
         void AddRemoteImage(string url);
 
-        void AddLocalImage(string uri);
+        void AddLocalImage(string filePath);
 
         List<string> GetAllImagePaths();
+
+        ImageMetaData GetImageMetaData(string filePath);
 
     }
 }

@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-
-
+using System.Windows.Media.Imaging;
 
 namespace MugMatcher.ImageProvider.ImageStore
 {
     public class ImageStore : IImageStore
     {
-        private List<string> Images;
+        private List<string> Images = new List<string>();
 
         public void AddRemoteImage(string url)
         {
@@ -43,6 +42,25 @@ namespace MugMatcher.ImageProvider.ImageStore
             {
                 stream.CopyTo(fs);
             }
+        }
+
+        public ImageMetaData GetImageMetaData(string filePath)
+        {
+            var imageData = new ImageMetaData();
+            using (Stream fs = File.Open(filePath, FileMode.Open, FileAccess.ReadWrite))
+            {
+                var decoder = BitmapDecoder.Create(fs, BitmapCreateOptions.None, BitmapCacheOption.Default);
+                var frame = decoder.Frames[0]; 
+                var metadata = frame.Metadata as BitmapMetadata;
+                if (metadata != null)
+                {
+                    imageData.TimeStamp = metadata.DateTaken;
+                    imageData.Location = metadata.Location;
+                }
+                fs.Close();
+            }
+
+            return imageData;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.IO;
+using System.Linq;
 using Neurotec.Biometrics;
 using Neurotec.Biometrics.Client;
 using Neurotec.Licensing;
@@ -22,6 +24,7 @@ namespace MugMatcher
 		    NLicense.ObtainComponents("/local", 5000, BiometricsComponents);
 
 			var biometricClient = new NBiometricClient();
+            SqlLite.Register(biometricClient);
 		    var reference = CreateSubject(referencePath, false);
 		    var candidate = CreateSubject(candidatePath, true);
 		    var result=new ScanResult();

@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using Neurotec.Biometrics;
+﻿using Neurotec.Biometrics;
 using Neurotec.Biometrics.Client;
 using Neurotec.Licensing;
 
@@ -28,7 +25,7 @@ namespace MugMatcher
 			    MatchingThreshold = 48,
 			    FacesMatchingSpeed = NMatchingSpeed.Low
 		    };
-			SqlLite.Register(biometricClient);
+			//SqlLite.Register(biometricClient);
 
 		    var reference = CreateSubject(referencePath, false);
 		    var candidate = CreateSubject(candidatePath, true);
@@ -43,8 +40,8 @@ namespace MugMatcher
 		    var subjectIndex = 0;
 			foreach (var subject in candidate.RelatedSubjects)
 			{
-				subjectIndex++;
-				subject.Id = $"Candidate_{subjectIndex}";
+				//subjectIndex++;
+				subject.Id = $"Candidate_{++subjectIndex}";
 				enrollTask.Subjects.Add(subject);
 			}
 			biometricClient.PerformTask(enrollTask);

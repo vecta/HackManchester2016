@@ -10,7 +10,19 @@ namespace MugMatcher.ImageProvider.ImageStore
     {
         private List<string> Images = new List<string>();
 
-        public void AddRemoteImage(string url)
+        public void Add(ImageFetchResult fetchResult)
+        {
+            if (fetchResult is LocalImageFetchResult)
+            {
+                AddLocalImage(fetchResult.ImageLocation);
+            }
+            else
+            {
+                AddRemoteImage(fetchResult.ImageLocation);
+            }
+        }
+
+        private void AddRemoteImage(string url)
         {
             using (var webClient = new WebClient())
             {
@@ -19,7 +31,7 @@ namespace MugMatcher.ImageProvider.ImageStore
             }
         }
 
-        public void AddLocalImage(string filePath)
+        private void AddLocalImage(string filePath)
         {
             File.Copy(filePath, GetNewFileName(filePath));
         }

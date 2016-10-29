@@ -5,9 +5,7 @@ namespace MugMatcher.ImageProvider
 {
     public interface IImageStore
     {
-        void AddRemoteImage(string url);
-
-        void AddLocalImage(string filePath);
+        void Add(ImageFetchResult fetchResult);
 
         List<string> GetAllImagePaths();
 

@@ -1,9 +1,13 @@
+using System;
+
 namespace MugMatcher.ImageProvider
 {
     public class ImageFetchRequest
     {
         public GeoLocation Location { get; set; }
         public int SearchRadiusMiles { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         public ImageFetchRequest(GeoLocation location, int searchRadiusInMiles = 5)
         {

@@ -1,0 +1,19 @@
+﻿html {
+  font-family: sans-serif;
+}
+img {
+  max-width: 100%;
+}
+.listView {
+  overflow: scroll;
+  white-space: nowrap;
+  max-height: 200px;
+  border: 1px #333;
+}
+.listView .listViewItem {
+  display: block;
+  padding: 1px;
+}
+.listView .listViewItem:nth-child(2n) {
+  background: #eee;
+}

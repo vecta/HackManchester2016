@@ -13,7 +13,7 @@ namespace MugMatcher.Tests
 	    public void Find_WithLocalImageFetcher_FindsFace()
 	    {
             SetupKeys();
-            const string faceToMatch = @"C:\Users\Matthew\Documents\HackManchester2016\TestImages\MissingPeople\Matt.jpg";
+            const string faceToMatch = @"C:\Users\robert.marshall.FIOFFICE\Documents\HackManchester\TestImages\MissingPeople\Matt.jpg";
 		    Acquisition acquisition =new Acquisition(new ImageStore());
 		    var matcher=new MugMatcher(acquisition);
 		    ImageFetchRequest imageFetchRequest=new ImageFetchRequest(null);
@@ -26,8 +26,8 @@ namespace MugMatcher.Tests
         {
    
            
-                ConfigurationManager.AppSettings["LocalImageSearchPath"] = @"ImageStore";
-            ConfigurationManager.AppSettings["TemporaryImageStorePath"] = @"C:\Users\robert.marshall.FIOFFICE\Documents\HackManchester\TestImages\ImagesToScan";
+                ConfigurationManager.AppSettings["LocalImageSearchPath"] = @"C:\temp\scanned";
+            ConfigurationManager.AppSettings["TemporaryImageStorePath"] = @"C:\temp\scanned";
 
             //ConfigurationManager.AppSettings["LocalImageSearchPath"] = @"C:\Temp\scanned";
             ConfigurationManager.AppSettings["TwitterAccessKey"] = "qLy8zHnWBYMC17x7IH6jx3fee";

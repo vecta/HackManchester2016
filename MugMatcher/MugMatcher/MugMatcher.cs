@@ -18,6 +18,7 @@ namespace MugMatcher
 			var imageFetchResults = _acquisition.FetchAll(fetchRequest);
 			foreach (var fetchResult in imageFetchResults)
 			{
+				scanner.Reset();
 				var scanResult = scanner.Scan(referenceImagePath, fetchResult.ImageLocation);
 				if (scanResult.Status == NBiometricStatus.Ok && scanResult.Score > 0)
 					return true;

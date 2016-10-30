@@ -13,20 +13,28 @@ namespace MugMatcher.Tests
 	    public void Find_WithLocalImageFetcher_FindsFace()
 	    {
             SetupKeys();
-            const string faceToMatch = @"C:\Users\robert.marshall.FIOFFICE\Documents\HackManchester\TestImages\MissingPeople\Matt.jpg";
+			DeleteExistingTempFilesFiles();
+		    const string faceToMatch = @"C:\Users\robert.marshall.FIOFFICE\Documents\HackManchester\TestImages\MissingPeople\Matt.jpg";
 		    var acquisition =new Acquisition(new ImageStore());
 		    var matcher=new MugMatcher(acquisition);
 		    var imageFetchRequest=new ImageFetchRequest(new GeoLocation());
 	        
-            var found = matcher.Find(faceToMatch, imageFetchRequest);
-			Assert.That(found, Is.True);
+            var results = matcher.Find(faceToMatch, imageFetchRequest);
+			Assert.That(results, Is.Not.Empty);
 	    }
 
-        private void SetupKeys()
+	    private static void DeleteExistingTempFilesFiles()
+	    {
+		    var directoryInfo = new DirectoryInfo(ConfigurationManager.AppSettings["TemporaryImageStorePath"]);
+		    foreach (var file in directoryInfo.GetFiles())
+			    file.Delete();
+	    }
+
+	    private void SetupKeys()
         {
    
            
-                ConfigurationManager.AppSettings["LocalImageSearchPath"] = @"C:\temp\scanned";
+                ConfigurationManager.AppSettings["LocalImageSearchPath"] = @"TestImages\MissingPeople";
             ConfigurationManager.AppSettings["TemporaryImageStorePath"] = @"C:\temp\scanned";
 
             //ConfigurationManager.AppSettings["LocalImageSearchPath"] = @"C:\Temp\scanned";

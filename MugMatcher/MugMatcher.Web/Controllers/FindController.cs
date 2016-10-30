@@ -17,15 +17,15 @@ namespace MugMatcher.Web.Controllers
 	        return View(model);
         }
 
-	  //  public JsonResult FindPerson(string file)
-	  //  {
-   //         var acquisition = new Acquisition(new ImageStore());
-		 //   var mugMatcher=new MugMatcher(acquisition);
-			//var path = Directory.EnumerateFiles(MissingImageLocation).First(f => f.Contains(file));
-			//var found = mugMatcher.Find(path, new ImageFetchRequest(null));
-			//return Json(found);
-	  //  }
-
+	    public JsonResult FindPerson(string file)
+	    {
+            var acquisition = new Acquisition(new ImageStore());
+		    var mugMatcher=new MugMatcher(acquisition);
+			var path = Directory.EnumerateFiles(MissingImageLocation).First(f => f.Contains(file));
+			var results = mugMatcher.Find(path, new ImageFetchRequest(null));
+			return Json(results);
+	    }
+		
         public JsonResult FindPerson()
         {
             var file = Request.Files[0];

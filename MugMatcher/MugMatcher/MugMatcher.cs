@@ -1,4 +1,5 @@
-﻿using MugMatcher.ImageProvider;
+﻿using System.Collections.Generic;
+using MugMatcher.ImageProvider;
 using Neurotec.Biometrics;
 
 namespace MugMatcher
@@ -12,19 +13,20 @@ namespace MugMatcher
 			_acquisition = acquisition;
 		}
 
-		public bool Find(string referenceImagePath, ImageFetchRequest fetchRequest)
+		public IEnumerable<ScanResult> Find(string referenceImagePath, ImageFetchRequest fetchRequest)
 		{
 			var scanner=new Scanner();
 			var imageFetchResults = _acquisition.FetchAll(fetchRequest);
+			var results = new List<ScanResult>();
 			foreach (var fetchResult in imageFetchResults)
 			{
 				scanner.Reset();
 				var scanResult = scanner.Scan(referenceImagePath, fetchResult.ImageLocation);
 				if (scanResult.Status == NBiometricStatus.Ok && scanResult.Score > 0)
-					return true;
+					results.Add(scanResult);
 			}
 
-			return false;
+			return results;
 		}
 	}
 }

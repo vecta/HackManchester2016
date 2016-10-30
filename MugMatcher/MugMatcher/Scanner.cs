@@ -1,4 +1,7 @@
-﻿using Neurotec.Biometrics;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Neurotec.Biometrics;
 using Neurotec.Biometrics.Client;
 using Neurotec.Licensing;
 
@@ -8,7 +11,7 @@ namespace MugMatcher
     {
 	    private readonly NBiometricClient _biometricClient;
 	    private static bool _registered;
-	    const string BiometricsComponents= "Biometrics.FaceExtraction,Biometrics.FaceMatching";
+	    const string BiometricsComponents= "Biometrics.FaceExtraction,Biometrics.FaceMatching,Biometrics.FaceSegmentsDetection";
 
 	    public Scanner()
 		{
@@ -19,7 +22,14 @@ namespace MugMatcher
 			_biometricClient = new NBiometricClient
 			{
 				MatchingThreshold = 48,
-				FacesMatchingSpeed = NMatchingSpeed.Low
+				FacesMatchingSpeed = NMatchingSpeed.Low,
+				FacesDetectBaseFeaturePoints = true,
+				FacesDetectAllFeaturePoints = true,
+				FacesRecognizeEmotion = true,
+				FacesRecognizeExpression = true,
+				FacesDetectProperties = true,
+				FacesDetermineGender = true,
+				FacesDetermineAge = true
 			};
 		}
 
@@ -37,25 +47,34 @@ namespace MugMatcher
 
 		    var reference = CreateSubject(referencePath, false);
 		    var candidate = CreateSubject(candidatePath, true);
-		    var result = new ScanResult();
+		    var result = new ScanResult(candidatePath);
 
 		    _biometricClient.CreateTemplate(reference);
 		    _biometricClient.CreateTemplate(candidate);
 
-		    var enrollTask = _biometricClient.CreateTask(NBiometricOperations.Enroll, null);
+		    var task = _biometricClient.CreateTask(NBiometricOperations.Enroll|NBiometricOperations.DetectSegments, null);
 		    candidate.Id = "Candidate_0";
-		    enrollTask.Subjects.Add(candidate);
+		    task.Subjects.Add(candidate);
 		    var subjectIndex = 0;
 			foreach (var subject in candidate.RelatedSubjects)
 			{
 				subject.Id = $"Candidate_{++subjectIndex}";
-				enrollTask.Subjects.Add(subject);
+				task.Subjects.Add(subject);
 			}
-			_biometricClient.PerformTask(enrollTask);
+			_biometricClient.PerformTask(task);
 
 		    result.Status = _biometricClient.Identify(reference);
-			if (reference.MatchingResults.Count>0)
-				result.Score = reference.MatchingResults[0].Score;
+		    if (reference.MatchingResults.Count > 0)
+		    {
+			    var matchingResult = reference.MatchingResults[0];
+			    result.Score = matchingResult.Score;
+			    var faceResults = new List<FaceResult>();
+			    foreach (var face in candidate.Faces)
+			    {
+				    faceResults.AddRange(face.Objects.Select(attributes => new FaceResult(attributes)));
+			    }
+				result.FaceResults = faceResults;
+			}
 
 		    return result;
 	    }

@@ -1,4 +1,5 @@
-﻿using Neurotec.Biometrics;
+﻿using System.Collections.Generic;
+using Neurotec.Biometrics;
 using Neurotec.Biometrics.Client;
 using Neurotec.Licensing;
 
@@ -6,7 +7,21 @@ namespace MugMatcher
 {
     public class Scanner
     {
+	    private readonly NBiometricClient _biometricClient;
 	    const string BiometricsComponents= "Biometrics.FaceExtraction,Biometrics.FaceMatching";
+
+	    public Scanner()
+		{
+			NLicense.ObtainComponents("/local", 5000, BiometricsComponents);
+
+			_biometricClient = new NBiometricClient
+		    {
+			    MatchingThreshold = 48,
+			    FacesMatchingSpeed = NMatchingSpeed.Low
+
+		    };
+
+	    }
 
 		private static NSubject CreateSubject(string fileName, bool isMultipleSubjects)
 		{
@@ -16,40 +31,42 @@ namespace MugMatcher
 			return subject;
 		}
 
-		public ScanResult Scan(string referencePath, string candidatePath)
+		public ScanResult Scan(string referencePath)
 	    {
-		    NLicense.ObtainComponents("/local", 5000, BiometricsComponents);
 
-		    var biometricClient = new NBiometricClient
-		    {
-			    MatchingThreshold = 48,
-			    FacesMatchingSpeed = NMatchingSpeed.Low
-		    };
+			var result = new ScanResult();
+
 			//SqlLite.Register(biometricClient);
 
-		    var reference = CreateSubject(referencePath, false);
-		    var candidate = CreateSubject(candidatePath, true);
-		    var result = new ScanResult();
-
-		    biometricClient.CreateTemplate(reference);
-		    biometricClient.CreateTemplate(candidate);
-
-		    var enrollTask = biometricClient.CreateTask(NBiometricOperations.Enroll, null);
-		    candidate.Id = "Candidate_0";
-		    enrollTask.Subjects.Add(candidate);
-		    var subjectIndex = 0;
-			foreach (var subject in candidate.RelatedSubjects)
+			using (var reference = CreateSubject(referencePath, false))
 			{
-				subject.Id = $"Candidate_{++subjectIndex}";
-				enrollTask.Subjects.Add(subject);
+				_biometricClient.CreateTemplate(reference);
+
+				result.Status = _biometricClient.Identify(reference);
+				if (reference.MatchingResults.Count > 0)
+					result.Score = reference.MatchingResults[0].Score;
 			}
-			biometricClient.PerformTask(enrollTask);
-
-		    result.Status = biometricClient.Identify(reference);
-			if (reference.MatchingResults.Count>0)
-				result.Score = reference.MatchingResults[0].Score;
-
 		    return result;
+	    }
+
+	    public void AddCandidateImages(IEnumerable<string> candidatePaths)
+	    {
+		    foreach (var candidatePath in candidatePaths)
+			    using (var candidate = CreateSubject(candidatePath, true))
+			    {
+				    _biometricClient.CreateTemplate(candidate);
+
+				    var enrollTask = _biometricClient.CreateTask(NBiometricOperations.Enroll, null);
+				    candidate.Id = "Candidate_0";
+				    enrollTask.Subjects.Add(candidate);
+				    var subjectIndex = 0;
+				    foreach (var subject in candidate.RelatedSubjects)
+				    {
+					    subject.Id = $"Candidate_{++subjectIndex}";
+					    enrollTask.Subjects.Add(subject);
+				    }
+				    _biometricClient.PerformTask(enrollTask);
+			    }
 	    }
     }
 }

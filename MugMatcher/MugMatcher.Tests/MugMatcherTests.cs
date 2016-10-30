@@ -1,6 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.IO;
+﻿using System.Configuration;
 using MugMatcher.ImageProvider;
 using NUnit.Framework;
 
@@ -12,11 +10,11 @@ namespace MugMatcher.Tests
 	    [Test]
 	    public void Find_WithLocalImageFetcher_FindsFace()
 	    {
-		    const string faceToMatch = @"C:\Users\richard.hopwood\Documents\HackManchester2016\TestImages\MissingPeople\Matt.jpg";
+		    const string faceToMatch = @"TestImages\MissingPeople\Matt.jpg";
 		    IImageFetcher imageFetcher=new LocalImageFetcher();
 		    var matcher=new MugMatcher(imageFetcher);
 		    ImageFetchRequest imageFetchRequest=new ImageFetchRequest(null);
-		    ConfigurationManager.AppSettings["LocalImageSearchPath"] = @"F:\Temp\scanned";
+		    ConfigurationManager.AppSettings["LocalImageSearchPath"] = @"TestImages\MissingPeople";
 			var found = matcher.Find(faceToMatch, imageFetchRequest);
 			Assert.That(found, Is.True);
 	    }

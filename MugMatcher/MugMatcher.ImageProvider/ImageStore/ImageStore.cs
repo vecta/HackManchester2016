@@ -49,7 +49,10 @@ namespace MugMatcher.ImageProvider
         {
             using (var fileStream = File.Create(filename))
             {
-                new MemoryStream(imageData).CopyTo(fileStream);
+                using (var memStream = new MemoryStream(imageData))
+                {
+                    memStream.CopyTo(fileStream);
+                }
             }
         }
 

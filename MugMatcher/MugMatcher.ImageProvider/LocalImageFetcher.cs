@@ -11,7 +11,8 @@ namespace MugMatcher.ImageProvider
 
         public IEnumerable<ImageFetchResult> Fetch(ImageFetchRequest request)
         {
-            var directoryInfo = new DirectoryInfo(ConfigurationManager.AppSettings["LocalImageSearchPath"]);
+	        var appSetting = ConfigurationManager.AppSettings["LocalImageSearchPath"];
+	        var directoryInfo = new DirectoryInfo(appSetting);
 	        var files = directoryInfo.EnumerateFiles();
 	        var fileInfos = files.Where(f=> _imageFileExtentions.Contains(f.Extension));
 	        return fileInfos.Select(info => new LocalImageFetchResult(info.FullName, info.FullName));

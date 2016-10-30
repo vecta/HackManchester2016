@@ -11,14 +11,14 @@ namespace MugMatcher.ImageProvider
 {
     public class GoogleCSEFetcher : IImageFetcher
     {
-        private string CseUrl = "https://www.googleapis.com/customsearch/v1?";
-        private string APIKey;
-        private string CustomSearchEngineId;
+        private readonly string _cseUrl = "https://www.googleapis.com/customsearch/v1?";
+        private string _apiKey;
+        private string _customSearchEngineId;
 
         public IEnumerable<ImageFetchResult> Fetch(ImageFetchRequest request)
         {       
-            APIKey = ConfigurationManager.AppSettings["GoogleAPIKey"];
-            CustomSearchEngineId = ConfigurationManager.AppSettings["CustomSearchEngineId"];
+            _apiKey = ConfigurationManager.AppSettings["GoogleAPIKey"];
+            _customSearchEngineId = ConfigurationManager.AppSettings["CustomSearchEngineId"];
             var queryString = BuildQueryString(request);
             var data = GetFromUrl(queryString);
             var results = JsonConvert.DeserializeObject<GoogleCSESearchResult>(data);
@@ -27,7 +27,7 @@ namespace MugMatcher.ImageProvider
 
         private string BuildQueryString(ImageFetchRequest request)
         {
-            return $"{CseUrl}key={APIKey}&cx={CustomSearchEngineId}&q=crowd%20of%20people%20manchester%20{DateTime.Now.Year}&searchType=image&imgType=face&daterestrict={request.StartDate:ddmmyyyy}:{request.EndDate:ddmmyyyy}&country=uk";
+            return $"{_cseUrl}key={_apiKey}&cx={_customSearchEngineId}&q=crowd%20of%20people%20manchester%20{DateTime.Now.Year}&searchType=image&imgType=face&daterestrict={request.StartDate:ddmmyyyy}:{request.EndDate:ddmmyyyy}&country=uk";
         }
 
         private string GetFromUrl(string url)

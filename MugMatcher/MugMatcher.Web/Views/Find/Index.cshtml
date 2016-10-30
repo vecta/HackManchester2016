@@ -9,24 +9,28 @@
                onchange="angular.element(this).scope().filePicked(this)"/>
         <label for="file-picker" class="bigButton">Choose a missing person</label>
     </div>
-    <div ng-if="hasFileBeenPicked" class="missing-persons-wrapper">
-        <div class="img-wrapper">
+	<div ng-if="hasFileBeenPicked" class="missing-persons-wrapper">
+		<div class="column">
+			<div class="img-wrapper">
             <img id="missing-persons-img" />
-        </div>
-        
-        <div class="details-wrapper">
+			</div>
+		</div>
+		<div class="column">
+			<div class="details-wrapper">
             <input ng-model="name" class="input" id="name-input" name="name-input" type="text" placeholder="Persons name"/> <br/>
-            <input ng-modal="age" class="input" id="age-input" name="name-input" type="text" placeholder="Persons age" /> <br />
-            <select ng-modal="gender" class="input" id="gender-input" name="name-input" placeholder="Persons gender"> 
-                <option disabled selected>Persons gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-            </select><br />
-            <input ng-modal="lat" class="input" id="lat-input" type="text" placeholder="Latitude"/>
-            <input ng-modal="long" class="input" id="long-input" type="text" placeholder="Longitude" />
-        </div>
-        <br/><button id="submit" ng-click="findPerson()">Find them!</button>
-    </div>
+            <input ng-model="age" class="input" id="age-input" name="name-input" type="text" placeholder="Persons age" /> <br />
+            <select ng-model="gender" class="input" id="gender-input" name="name-input" placeholder="Persons gender"> 
+					<option disabled selected>Persons gender</option>
+					<option value="Male">Male</option>
+					<option value="Female">Female</option>
+				</select><br />
+            <input ng-model="lat" class="input" id="lat-input" type="text" placeholder="Latitude"/>
+            <input ng-model="long" class="input" id="long-input" type="text" placeholder="Longitude" />
+			</div>
+			<br /><button id="submit" ng-click="findPerson()">Find them!</button>
+		</div>
+		<img class="resultImage" ng-repeat="result in results" ng-src="/find/image?file={{result.File}}"/>
+	</div>
 </div>
 
 @*<div ng-controller="find">

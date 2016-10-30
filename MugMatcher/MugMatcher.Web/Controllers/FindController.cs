@@ -22,8 +22,8 @@ namespace MugMatcher.Web.Controllers
             var acquisition = new Acquisition(new ImageStore());
 		    var mugMatcher=new MugMatcher(acquisition);
 			var path = Directory.EnumerateFiles(MissingImageLocation).First(f => f.Contains(file));
-			var found = mugMatcher.Find(path, new ImageFetchRequest(null));
-			return Json(found);
+			var results = mugMatcher.Find(path, new ImageFetchRequest(null));
+			return Json(results);
 	    }
 
 		public ActionResult Image(string file)

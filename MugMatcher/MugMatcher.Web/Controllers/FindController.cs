@@ -15,9 +15,7 @@ namespace MugMatcher.Web.Controllers
 
 		public ActionResult Index()
         {
-	        var fullPath = Path.GetFullPath(MissingImageLocation);
-	        var model = new FindViewModel {FileList = Directory.EnumerateFiles(fullPath).Select(Path.GetFileNameWithoutExtension)};
-	        return View(model);
+	        return View();
         }
 		
         public async Task<JsonResult> FindPerson()
@@ -33,15 +31,20 @@ namespace MugMatcher.Web.Controllers
                         var stream = fileContent.InputStream;
                         // and optionally write the file to disk
                         var fileName = Path.GetFileName(file);
-                        var path = Path.Combine("C:\\temp\\something", fileName, ".jpg");
+                        var path = Path.Combine("C:\\temp", fileName+ ".jpg");
                         using (var fileStream = System.IO.File.Create(path))
                         {
                             stream.CopyTo(fileStream);
                         }
-                    }
-                }
+
+						var acquisition = new Acquisition(new ImageStore());
+						var mugMatcher = new MugMatcher(acquisition);
+						var results = mugMatcher.Find(path, new ImageFetchRequest(null));
+						return Json(results);
+					}
+				}
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json("Upload failed");

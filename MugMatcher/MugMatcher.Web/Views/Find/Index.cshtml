@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div ng-controller="find" ng-cloak>
+<div ng-controller="find">
     <div ng-if="!hasFileBeenPicked" class="file-picker-wrapper">
         <input type="file" name="file-picker" id="file-picker" class="inputfile" accept=".jpg,.png,.gif,.tif,.tiff,.jpeg" 
                onchange="angular.element(this).scope().filePicked(this)"/>

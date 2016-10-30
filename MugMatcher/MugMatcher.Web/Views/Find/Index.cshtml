@@ -7,7 +7,7 @@
     <div ng-if="!hasFileBeenPicked" class="file-picker-wrapper">
         <input type="file" name="file-picker" id="file-picker" class="inputfile" accept=".jpg,.png,.gif,.tif,.tiff,.jpeg" 
                onchange="angular.element(this).scope().filePicked(this)"/>
-        <label for="file-picker">Choose a missing person</label>
+        <label for="file-picker" class="bigButton">Choose a missing person</label>
     </div>
     <div ng-if="hasFileBeenPicked" class="missing-persons-wrapper">
         <div class="img-wrapper">

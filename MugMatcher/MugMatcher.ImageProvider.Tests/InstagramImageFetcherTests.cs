@@ -10,7 +10,7 @@ namespace MugMatcher.ImageProvider.Tests
         [Test]
         public void CanGetImagesFromInstagram()
         {
-            ConfigurationManager.AppSettings["InstagramAccessTooken"] = "4092770693.e029fea.71fb21e304284dce9496cb4cdb635b8b";
+            ConfigurationManager.AppSettings["InstagramAccessToken"] = "4092770693.e029fea.71fb21e304284dce9496cb4cdb635b8b";
 
             var imageFetcher = new InstagramImageFetcher();
             var images = imageFetcher.Fetch(new ImageFetchRequest(new GeoLocation { Latitude = 53.477328, Longtitude = -2.254980 }, 20));

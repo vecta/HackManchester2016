@@ -19,8 +19,8 @@ namespace MugMatcher.Web.Controllers
 
 	    public JsonResult FindPerson(string file)
 	    {
-		    var imageFetcher=new LocalImageFetcher();
-		    var mugMatcher=new MugMatcher(imageFetcher);
+            var acquisition = new Acquisition(new ImageStore());
+		    var mugMatcher=new MugMatcher(acquisition);
 			var path = Directory.EnumerateFiles(MissingImageLocation).First(f => f.Contains(file));
 			var found = mugMatcher.Find(path, new ImageFetchRequest(null));
 			return Json(found);

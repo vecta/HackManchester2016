@@ -21,7 +21,7 @@ namespace MugMatcher.ImageProvider
 
         public InstagramImageFetcher()
         {
-            _accessToken = ConfigurationManager.AppSettings["InstagramAccessTooken"];
+            _accessToken = ConfigurationManager.AppSettings["InstagramAccessToken"];
         }
 
         public IEnumerable<ImageFetchResult> Fetch(ImageFetchRequest request)

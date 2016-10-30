@@ -5,17 +5,17 @@ namespace MugMatcher
 {
 	public class MugMatcher
 	{
-		private readonly IImageFetcher _imageFetcher;
+		private readonly Acquisition _acquisition;
 
-		public MugMatcher(IImageFetcher imageFetcher)
+		public MugMatcher(Acquisition acquisition)
 		{
-			_imageFetcher = imageFetcher;
+			_acquisition = acquisition;
 		}
 
 		public bool Find(string referenceImagePath, ImageFetchRequest fetchRequest)
 		{
 			var scanner=new Scanner();
-			var imageFetchResults = _imageFetcher.Fetch(fetchRequest);
+			var imageFetchResults = _acquisition.FetchAll(fetchRequest);
 			foreach (var fetchResult in imageFetchResults)
 			{
 				var scanResult = scanner.Scan(referenceImagePath, fetchResult.ImageLocation);

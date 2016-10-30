@@ -12,8 +12,8 @@ namespace MugMatcher
 			Beard = (attributes.Properties & NLProperties.Beard) == NLProperties.Beard;
 		}
 
-		public bool Beard { get; set; }
-		public bool Glasses { get; set; }
+		public bool Beard { get; private set; }
+		public bool Glasses { get; private set; }
 		public NGender Gender { get; private set; }
 		public byte Age { get; private set; }
 	}

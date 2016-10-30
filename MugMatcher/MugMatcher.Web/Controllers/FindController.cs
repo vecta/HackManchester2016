@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -36,7 +37,7 @@ namespace MugMatcher.Web.Controllers
                         {
                             stream.CopyTo(fileStream);
                         }
-
+	                    DeleteExistingTempFilesFiles();
 						var acquisition = new Acquisition(new ImageStore());
 						var mugMatcher = new MugMatcher(acquisition);
 						var results = mugMatcher.Find(path, new ImageFetchRequest(null));
@@ -51,13 +52,20 @@ namespace MugMatcher.Web.Controllers
             }
 
             return Json(true);
-        }
+		}
+
+		private static void DeleteExistingTempFilesFiles()
+		{
+			var directoryInfo = new DirectoryInfo(ConfigurationManager.AppSettings["TemporaryImageStorePath"]);
+			foreach (var file in directoryInfo.GetFiles())
+				file.Delete();
+		}
 
 		public ActionResult Image(string file)
 		{
 			if (file == null)
 				return null;
-			var path = Directory.EnumerateFiles(MissingImageLocation).First(f => f.Contains(file));
+			var path = Directory.EnumerateFiles(ConfigurationManager.AppSettings["TemporaryImageStorePath"]).First(f => f.Contains(file));
 			return File(path, "image/jpeg");
 		}
 	}

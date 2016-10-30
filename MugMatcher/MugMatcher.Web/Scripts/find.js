@@ -22,8 +22,10 @@
 	        contentType: false,
 	        processData: false,
 	        data: data,
-	        success: function (result) {
-	            console.log(result);
+	        success: function (results) {
+		        console.log(results);
+		        $scope.results = results;
+		        $scope.$apply();
 	        },
 	        error: function (xhr, status, p3, p4) {
 	            var err = "Error " + " " + status + " " + p3 + " " + p4;

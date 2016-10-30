@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Neurotec.Biometrics;
 using Neurotec.Biometrics.Client;
 using Neurotec.Licensing;
@@ -20,7 +21,6 @@ namespace MugMatcher
 			    FacesMatchingSpeed = NMatchingSpeed.Low
 
 		    };
-
 	    }
 
 		private static NSubject CreateSubject(string fileName, bool isMultipleSubjects)
@@ -57,7 +57,7 @@ namespace MugMatcher
 				    _biometricClient.CreateTemplate(candidate);
 
 				    var enrollTask = _biometricClient.CreateTask(NBiometricOperations.Enroll, null);
-				    candidate.Id = "Candidate_0";
+				    candidate.Id = $"Candidate_{Guid.NewGuid()}";
 				    enrollTask.Subjects.Add(candidate);
 				    var subjectIndex = 0;
 				    foreach (var subject in candidate.RelatedSubjects)

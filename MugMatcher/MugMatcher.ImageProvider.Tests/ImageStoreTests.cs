@@ -15,7 +15,7 @@ namespace MugMatcher.ImageProvider.Tests
         {
             ConfigurationManager.AppSettings["TemporaryImageStorePath"] = @"f:\temp";
             IImageStore imageStore = new ImageStore();
-            var result = imageStore.StoreImages(new List<ImageFetchResult> {new ImageFetchResult("http://weknowyourdreams.com/images/chicken/chicken-05.jpg", "Test Image")});
+            var result = imageStore.StoreImages(new List<ImageFetchResult> {new ImageFetchResult("http://weknowyourdreams.com/images/chicken/chicken-05.jpg", "Test Image", "Local")});
         }
     }
 }

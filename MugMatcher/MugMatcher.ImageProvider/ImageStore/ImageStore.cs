@@ -9,16 +9,17 @@ namespace MugMatcher.ImageProvider
 {
     public class ImageStore : IImageStore
     {
-        public IEnumerable<LocalImageFetchResult> StoreImages(IEnumerable<ImageFetchResult> imageData) { return imageData.Select(StoreImage).ToList(); }
+        public IEnumerable<LocalImageFetchResult> StoreImages(IEnumerable<ImageFetchResult> imageData) => imageData.Select(StoreImage).ToList();
 
-        private LocalImageFetchResult StoreImage(ImageFetchResult image) { return image is LocalImageFetchResult ? StoreLocalImage(image) : StoreRemoteImage(image); }
+        private LocalImageFetchResult StoreImage(ImageFetchResult image) => image is LocalImageFetchResult ? StoreLocalImage(image) : StoreRemoteImage(image);
 
         private LocalImageFetchResult StoreRemoteImage(ImageFetchResult image)
         {
             using (var webClient = new WebClient())
             {
                 var imageData = webClient.DownloadData(image.ImageLocation);
-                var newFileName = GetNewFileName(StripQueryString(image.ImageLocation));
+                //var newFileName = GetNewFileName(StripQueryString(image.ImageLocation));
+                var newFileName = GetNewFileName(image);
                 SaveImage(newFileName, imageData);
                 return new LocalImageFetchResult(newFileName, image.Reference);
             }
@@ -36,6 +37,12 @@ namespace MugMatcher.ImageProvider
         private string GetNewFileName(string file)
         {
             return Path.Combine(ConfigurationManager.AppSettings["TemporaryImageStorePath"], $"{Guid.NewGuid()}.{file.Split('.').Last()}");
+        }
+
+        private string GetNewFileName(ImageFetchResult image)
+        {
+            return Path.Combine(ConfigurationManager.AppSettings["TemporaryImageStorePath"],
+                $"{image.Source}_{Guid.NewGuid()}.{StripQueryString(image.ImageLocation).Split('.').Last()}");
         }
 
         private void SaveImage(string filename, byte[] imageData)

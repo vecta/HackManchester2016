@@ -37,7 +37,7 @@ namespace MugMatcher.ImageProvider
             return foundImages;
         }
 
-        private IEnumerable<ImageFetchResult> GetPhotosFromLocation(string locationId)
+        public IEnumerable<ImageFetchResult> GetPhotosFromLocation(string locationId)
         {
             var result = new List<ImageFetchResult>();
 
@@ -45,7 +45,7 @@ namespace MugMatcher.ImageProvider
 
             foreach (var postJson in resultJson["data"])
             {
-                result.Add(new ImageFetchResult(postJson["images"]["standard_resolution"]["url"].ToString(), postJson["link"].ToString()));
+                result.Add(new ImageFetchResult(postJson["images"]["standard_resolution"]["url"].ToString(), postJson["link"].ToString(), "Instagram"));
             }
 
             return result;

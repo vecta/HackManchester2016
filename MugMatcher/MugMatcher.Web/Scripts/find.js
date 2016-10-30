@@ -3,25 +3,22 @@
 	$scope.selectedPath = "";
 	$scope.personFound = null;
 	$scope.hasFileBeenPicked = false;
-    $scope.file = null;
+	$scope.files = null;
 
 	$scope.setPath = function (path) {
 		$scope.selectedPath = path;
 	}
 
 	$scope.findPerson = function () {
-		//$scope.personFound = null;
-		//$http.post("/find/findPerson", { file: path }).then(function (result) {
-		//	$scope.personFound = result.data;
-		//	console.log($scope.personFound);
-	    //});
+
 	    var data = new FormData();
 	    for (var x = 0; x < $scope.files.length; x++) {
 	        data.append("file" + x, $scope.files[x]);
 	    }
-	    $http({
+
+	    $.ajax({
 	        type: "POST",
-	        url: '/find/findPerson',
+	        url: '/find/findPerson?',
 	        contentType: false,
 	        processData: false,
 	        data: data,

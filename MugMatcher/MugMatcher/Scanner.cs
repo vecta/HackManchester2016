@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Neurotec.Biometrics;
 using Neurotec.Biometrics.Client;
 using Neurotec.Licensing;
@@ -66,9 +68,13 @@ namespace MugMatcher
 		    {
 			    var matchingResult = reference.MatchingResults[0];
 			    result.Score = matchingResult.Score;
-			    var enumerable = candidate.Faces.Select(face => face.Objects);
-			    result.FaceResults = enumerable.Select(attributes => new FaceResult(attributes));
-		    }
+			    var faceResults = new List<FaceResult>();
+			    foreach (var face in candidate.Faces)
+			    {
+				    faceResults.AddRange(face.Objects.Select(attributes => new FaceResult(attributes)));
+			    }
+				result.FaceResults = faceResults;
+			}
 
 		    return result;
 	    }

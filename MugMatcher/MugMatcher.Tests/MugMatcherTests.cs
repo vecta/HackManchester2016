@@ -19,8 +19,8 @@ namespace MugMatcher.Tests
 		    var matcher=new MugMatcher(acquisition);
 		    var imageFetchRequest=new ImageFetchRequest(new GeoLocation());
 	        
-            var found = matcher.Find(faceToMatch, imageFetchRequest);
-			Assert.That(found, Is.True);
+            var results = matcher.Find(faceToMatch, imageFetchRequest);
+			Assert.That(results, Is.Not.Empty);
 	    }
 
 	    private static void DeleteExistingTempFilesFiles()

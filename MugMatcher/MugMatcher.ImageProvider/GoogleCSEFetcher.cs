@@ -22,7 +22,7 @@ namespace MugMatcher.ImageProvider
             var queryString = BuildQueryString(request);
             var data = GetFromUrl(queryString);
             var results = JsonConvert.DeserializeObject<GoogleCSESearchResult>(data);
-            return results.items.Select(image => new ImageFetchResult(image.link, image.image.contextLink));
+            return results.items.Select(image => new ImageFetchResult(image.link, image.image.contextLink, "Google"));
         }
 
         private string BuildQueryString(ImageFetchRequest request)

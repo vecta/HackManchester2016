@@ -23,8 +23,8 @@ namespace MugMatcher.ImageProvider
 
         public GeoLocation()
         {
-            Latitude = 53.4807590;
-            Longtitude = -2.2426310;
+            Latitude = 53.477410;
+            Longtitude = -2.254583;
         }
     }
 }

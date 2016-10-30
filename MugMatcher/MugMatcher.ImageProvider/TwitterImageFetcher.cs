@@ -39,7 +39,7 @@ namespace MugMatcher.ImageProvider
 
         private ImageFetchResult GetImageUrl(ITweet tweet)
         {
-            return new ImageFetchResult(tweet.Media.First().MediaURL, tweet.Url);
+            return new ImageFetchResult(tweet.Media.First().MediaURL, tweet.Url, "Twitter");
         }
     }
 }

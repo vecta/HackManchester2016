@@ -2,6 +2,7 @@
     .controller("find", ["$scope", "$http", function ($scope, $http) {
 	$scope.selectedPath = "";
 	$scope.personFound = null;
+	$scope.showLoadingIcon = false;
 	$scope.hasFileBeenPicked = false;
 	$scope.files = null;
     var name = '',
@@ -15,7 +16,7 @@
 	}
 
 	$scope.findPerson = function () {
-
+	    $scope.showLoadingIcon = true;
 	    var data = new FormData();
 	    for (var x = 0; x < $scope.files.length; x++) {
 	        data.append("file" + x, $scope.files[x]);
@@ -36,11 +37,13 @@
 	        processData: false,
 	        data: data,
 	        success: function (results) {
+	            $scope.showLoadingIcon = false;
 		        console.log(results);
 		        $scope.results = results;
 		        $scope.$apply();
 	        },
 	        error: function (xhr, status, p3, p4) {
+	            $scope.showLoadingIcon = false;
 	            var err = "Error " + " " + status + " " + p3 + " " + p4;
 	            if (xhr.responseText && xhr.responseText[0] == "{")
 	                err = JSON.parse(xhr.responseText).Message;

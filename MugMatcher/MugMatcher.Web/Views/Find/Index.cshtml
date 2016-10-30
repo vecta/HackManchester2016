@@ -5,6 +5,30 @@
 }
 
 <div ng-controller="find">
+    <div ng-if="!hasFileBeenPicked" class="file-picker-wrapper">
+        <input type="file" name="file-picker" id="file-picker" class="inputfile" accept=".jpg,.png,.gif,.tif,.tiff,.jpeg" 
+               onchange="angular.element(this).scope().filePicked(this)"/>
+        <label for="file-picker">Choose a missing person</label>
+    </div>
+    <div ng-if="hasFileBeenPicked" class="missing-persons-wrapper">
+        <div class="img-wrapper">
+            <img id="missing-persons-img" src="http://i.imgur.com/Zvz0eve.jpg" />
+        </div>
+        
+        <div class="details-wrapper">
+            <input class="input" id="name-input" name="name-input" type="text" placeholder="Persons name"/> <br/>
+            <input class="input" id="age-input" name="name-input" type="text" placeholder="Persons age" /> <br />
+            <select class="input" id="gender-input" name="name-input" placeholder="Persons gender"> 
+                <option disabled selected>Persons gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select><br />
+            <button id="submit" ng-click="findPerson()">Find them!</button>
+        </div>
+    </div>
+</div>
+
+@*<div ng-controller="find">
 	<div class="listView">
 		<a class="listViewItem" ng-repeat="path in fileList" href="#" ng-click="setPath(path)">{{path}}</a>
 	</div>
@@ -17,4 +41,4 @@
 	</div>
 
 	<scope-init value="fileList">@Json.Encode(Model.FileList)</scope-init>
-</div>
+</div>*@

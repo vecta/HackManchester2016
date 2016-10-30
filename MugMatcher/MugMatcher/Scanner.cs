@@ -40,7 +40,6 @@ namespace MugMatcher
 		    var subjectIndex = 0;
 			foreach (var subject in candidate.RelatedSubjects)
 			{
-				//subjectIndex++;
 				subject.Id = $"Candidate_{++subjectIndex}";
 				enrollTask.Subjects.Add(subject);
 			}

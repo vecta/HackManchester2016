@@ -5,11 +5,12 @@ namespace MugMatcher.ImageProvider
 {
     public interface IImageStore
     {
-        void Add(ImageFetchResult fetchResult);
+//        void Add(ImageFetchResult fetchResult);
 
-        List<string> GetAllImagePaths();
+//        IEnumerable<string> GetAllImagePaths();
 
-        ImageMetaData GetImageMetaData(string filePath);
+//        ImageMetaData GetImageMetaData(string filePath);
 
+        IEnumerable<LocalImageFetchResult> StoreImages(IEnumerable<ImageFetchResult> imageData);
     }
 }

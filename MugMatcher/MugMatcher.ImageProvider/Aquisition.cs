@@ -9,7 +9,7 @@ namespace MugMatcher.ImageProvider
 
         public Acquisition(IImageStore imageStore)
         {
-            _imageFetchers = new List<IImageFetcher> {new LocalImageFetcher()};
+            _imageFetchers = new List<IImageFetcher> {new LocalImageFetcher(), new GoogleCSEFetcher(), new InstagramImageFetcher(), new TwitterImageFetcher()};
             _imageStore = imageStore;
         }
 
@@ -20,17 +20,7 @@ namespace MugMatcher.ImageProvider
             {
                 reuslts.AddRange(imageFetcher.Fetch(request));
             }
-            return reuslts;
-
-            //            List<Task<IEnumerable<ImageFetchResult>>> results = new List<Task<IEnumerable<ImageFetchResult>>>();
-            //            foreach (var fetcher in _imageFetchers)
-            //            {
-            //                results.Add(fetcher.Fetch(request));
-            //            }
-            //
-            //            var i = results.Select(async task => await task);
-            //
-            //            var m = results.Select(imageResults => imageResults.Result.Select(result => result)).ToList();
+            return _imageStore.StoreImages(reuslts);
         }
     }
 }

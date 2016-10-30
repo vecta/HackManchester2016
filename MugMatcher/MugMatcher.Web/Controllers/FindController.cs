@@ -8,7 +8,7 @@ namespace MugMatcher.Web.Controllers
 {
     public class FindController : Controller
     {
-	    private const string MissingImageLocation = @"C:\SourceControl\HackManchester2016\TestImages\MissingPeople";
+	    private const string MissingImageLocation = @"C:\Users\richard.hopwood\Documents\HackManchester2016\TestImages\MissingPeople";
 
 		public ActionResult Index()
         {

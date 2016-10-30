@@ -14,9 +14,9 @@ namespace MugMatcher.Tests
 	    {
             SetupKeys();
             const string faceToMatch = @"C:\Users\robert.marshall.FIOFFICE\Documents\HackManchester\TestImages\MissingPeople\Matt.jpg";
-		    Acquisition acquisition =new Acquisition(new ImageStore());
+		    var acquisition =new Acquisition(new ImageStore());
 		    var matcher=new MugMatcher(acquisition);
-		    ImageFetchRequest imageFetchRequest=new ImageFetchRequest(null);
+		    var imageFetchRequest=new ImageFetchRequest(new GeoLocation());
 	        
             var found = matcher.Find(faceToMatch, imageFetchRequest);
 			Assert.That(found, Is.True);
@@ -35,7 +35,6 @@ namespace MugMatcher.Tests
             ConfigurationManager.AppSettings["InstagramAccessToken"] = "4092770693.e029fea.71fb21e304284dce9496cb4cdb635b8b";
             ConfigurationManager.AppSettings["GoogleAPIKey"] = "AIzaSyB-LOommQ-bfWysfqgnql6aOweiHy4KZCM";
             ConfigurationManager.AppSettings["CustomSearchEngineId"] = "002232642848038589219%3Aoizy299vm8k";
-            //ConfigurationManager.AppSettings["TemporaryImageStorePath"] = @"C:\Users\Matthew\Documents\HackManchester2016\TestImages";
             
         }
     }

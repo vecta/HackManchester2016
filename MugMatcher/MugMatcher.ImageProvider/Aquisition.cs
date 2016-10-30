@@ -9,7 +9,7 @@ namespace MugMatcher.ImageProvider
 
         public Acquisition(IImageStore imageStore)
         {
-            _imageFetchers = new List<IImageFetcher> {new LocalImageFetcher(), new GoogleCSEFetcher(), new InstagramImageFetcher(), new TwitterImageFetcher()};
+            _imageFetchers = new List<IImageFetcher> {new LocalImageFetcher(), /*new GoogleCSEFetcher(), */new InstagramImageFetcher()/*, new TwitterImageFetcher()*/};
             _imageStore = imageStore;
         }
 

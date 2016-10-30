@@ -22,8 +22,11 @@ namespace MugMatcher
 			{
 				scanner.Reset();
 				var scanResult = scanner.Scan(referenceImagePath, fetchResult.ImageLocation);
-				if (scanResult.Status == NBiometricStatus.Ok && scanResult.Score > 0)
-					results.Add(scanResult);
+			    if (scanResult.Status == NBiometricStatus.Ok && scanResult.Score > 0)
+			    {
+			        results.Add(scanResult);
+//			        return results;
+			    }
 			}
 
 			return results;

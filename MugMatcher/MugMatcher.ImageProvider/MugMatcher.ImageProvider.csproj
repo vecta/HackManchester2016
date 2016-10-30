@@ -36,6 +36,10 @@
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+      <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
       <Private>True</Private>
@@ -82,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aquisition.cs" />
+    <Compile Include="FacebookImageFetcher.cs" />
     <Compile Include="GoogleCSEFetcher.cs" />
     <Compile Include="GoogleCSESearchResult.cs" />
     <Compile Include="IImageFetcher.cs" />

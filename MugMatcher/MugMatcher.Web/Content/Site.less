@@ -18,6 +18,12 @@ header{background-image:url('logo.png');
        border-bottom:3px solid #485664;
 }
 
+.bigButton{width:100%;background-color:#333;
+           padding:8px;
+}
+.bigButton:focus{color:#a6c2dd !important}
+.bigButton:hover{color:#a6c2dd !important}
+
 img{
 	max-width:100%;
 }
@@ -71,10 +77,14 @@ img{
     color: #3498db;
 }
 
+.column{
+	width:49%;
+	display:inline-block;
+}
+
 .img-wrapper{
-    height:700px;
-    width:350px;
-    float:left;
+	width:100%;
+	padding:10px;
 }
 
 #missing-persons-img{
@@ -83,15 +93,11 @@ img{
 }
 
 .missing-persons-wrapper{
-    position:fixed;
-    top:20%;
-    left:20%;
 }
 
 .details-wrapper{
-    margin-left: 75px;
-    height: 100%;
-    float:left;
+	width:100%;
+	padding:10px;
 }
 
 .input, #submit{
@@ -139,4 +145,9 @@ img{
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
+  }
+  
+.resultImage{
+	max-height:500px;
+	float:left;
 }

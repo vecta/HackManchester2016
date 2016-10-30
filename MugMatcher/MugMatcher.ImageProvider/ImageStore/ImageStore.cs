@@ -2,84 +2,67 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Net;
-using System.Windows.Media.Imaging;
 
-namespace MugMatcher.ImageProvider.ImageStore
+namespace MugMatcher.ImageProvider
 {
     public class ImageStore : IImageStore
     {
-        private List<string> Images = new List<string>();
-        private string imageStorePath;
+        public IEnumerable<LocalImageFetchResult> StoreImages(IEnumerable<ImageFetchResult> imageData) { return imageData.Select(StoreImage).ToList(); }
 
-        public ImageStore()
-        {
-            imageStorePath = ConfigurationManager.AppSettings["TemporaryImageStorePath"];
-        }
+        private LocalImageFetchResult StoreImage(ImageFetchResult image) { return image is LocalImageFetchResult ? StoreLocalImage(image) : StoreRemoteImage(image); }
 
-        public void Add(ImageFetchResult fetchResult)
-        {
-            if (fetchResult is LocalImageFetchResult)
-            {
-                AddLocalImage(fetchResult.ImageLocation);
-            }
-            else
-            {
-                AddRemoteImage(fetchResult.ImageLocation);
-            }
-        }
-
-        private void AddRemoteImage(string url)
+        private LocalImageFetchResult StoreRemoteImage(ImageFetchResult image)
         {
             using (var webClient = new WebClient())
             {
-                var data = webClient.DownloadData(url);
-                SaveImage(GetNewFileName(url), data);             
+                var imageData = webClient.DownloadData(image.ImageLocation);
+                var newFileName = GetNewFileName(StripQueryString(image.ImageLocation));
+                SaveImage(newFileName, imageData);
+                return new LocalImageFetchResult(newFileName, image.Reference);
             }
         }
 
-        private void AddLocalImage(string filePath)
+        private LocalImageFetchResult StoreLocalImage(ImageFetchResult image)
         {
-            File.Copy(filePath, GetNewFileName(filePath));
+            var newFileName = GetNewFileName(image.ImageLocation);
+            File.Copy(image.ImageLocation, newFileName);
+            return new LocalImageFetchResult(newFileName, image.Reference);
         }
 
-        public List<string> GetAllImagePaths()
-        {
-            return Images;
-        }
+        private string StripQueryString(string url) { return url.Split('?')[0]; }
 
         private string GetNewFileName(string file)
         {
-            return Path.Combine(imageStorePath ,$"{Guid.NewGuid()}.{file.Split('.')[1]}");
+            return Path.Combine(ConfigurationManager.AppSettings["TemporaryImageStorePath"], $"{Guid.NewGuid()}.{file.Split('.').Last()}");
         }
 
-        private void SaveImage(string uri, byte[] data)
+        private void SaveImage(string filename, byte[] imageData)
         {
-            Images.Add(uri);
-            var stream = new MemoryStream(data);
-            using (var fs = File.Create(uri))
+            using (var fileStream = File.Create(filename))
             {
-                stream.CopyTo(fs);
+                new MemoryStream(imageData).CopyTo(fileStream);
             }
         }
 
-        public ImageMetaData GetImageMetaData(string filePath)
-        {
-            var imageData = new ImageMetaData();
-            using (Stream fs = File.Open(filePath, FileMode.Open, FileAccess.ReadWrite))
-            {
-                var decoder = BitmapDecoder.Create(fs, BitmapCreateOptions.None, BitmapCacheOption.Default);
-                var frame = decoder.Frames[0]; 
-                var metadata = frame.Metadata as BitmapMetadata;
-                if (metadata != null)
-                {
-                    imageData.TimeStamp = metadata.DateTaken;
-                    imageData.Location = metadata.Location;
-                }
-                fs.Close();
-            }
-
-            return imageData;
-        }
+        //        public ImageMetaData GetImageMetaData(string image)
+        //        {
+        //            var imageData = new ImageMetaData();
+        //            using (Stream fs = File.Open(image, FileMode.Open, FileAccess.ReadWrite))
+        //            {
+        //                var decoder = BitmapDecoder.Create(fs, BitmapCreateOptions.None, BitmapCacheOption.Default);
+        //                var frame = decoder.Frames[0]; 
+        //                var metadata = frame.Metadata as BitmapMetadata;
+        //                if (metadata != null)
+        //                {
+        //                    imageData.TimeStamp = metadata.DateTaken;
+        //                    imageData.Location = metadata.Location;
+        //                }
+        //                fs.Close();
+        //            }
+        //
+        //            return imageData;
+        //        }
     }
 }

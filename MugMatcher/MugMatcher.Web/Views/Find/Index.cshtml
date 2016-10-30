@@ -1,0 +1,20 @@
+﻿@model MugMatcher.Web.Models.FindViewModel
+@{
+    ViewBag.Title = "Find";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-controller="find">
+	<div class="listView">
+		<a class="listViewItem" ng-repeat="path in fileList" href="#" ng-click="setPath(path)">{{path}}</a>
+	</div>
+	<div>Selected path: {{selectedPath}}</div>
+	<img ng-src="/find/image?file={{selectedPath}}"/>
+	<button ng-click="findPerson(selectedPath)">Find Person</button>
+	<div ng-if="personFound!==null">
+		<div ng-if="personFound">Person found</div>
+		<div ng-if="!personFound">Person not found</div>
+	</div>
+
+	<scope-init value="fileList">@Json.Encode(Model.FileList)</scope-init>
+</div>

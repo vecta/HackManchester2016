@@ -95,6 +95,7 @@
     <Compile Include="ImageFetchResult.cs" />
     <Compile Include="ImageStore\ImageMetaData.cs" />
     <Compile Include="ImageStore\ImageStore.cs" />
+    <Compile Include="InstagramImageFetcher.cs" />
     <Compile Include="LocalImageFetcher.cs" />
     <Compile Include="LocalImageFetchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
